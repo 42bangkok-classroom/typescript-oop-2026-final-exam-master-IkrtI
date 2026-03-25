@@ -25,8 +25,13 @@ export class PurchaseService {
           ),
       );
     }
+
     if (startDate || endDate) {
-      return Purchase;
+      Purchase = Purchase.filter(
+        (p) =>
+          new Date(p.purchaseDate).getDate() >= new Date(startDate).getDate() &&
+          new Date(p.purchaseDate).getDate() < new Date(endDate).getDate(),
+      );
     }
     return Purchase;
   }
