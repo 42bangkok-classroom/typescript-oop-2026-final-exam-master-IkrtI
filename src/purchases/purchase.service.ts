@@ -6,7 +6,7 @@ import { readFileSync } from 'fs';
 export class PurchaseService {
   findAll(): Purchase[] {
     const Purchase = JSON.parse(
-      readFileSync('./data/product.json', 'utf-8'),
+      readFileSync('data/purchases.json', 'utf-8'),
     ) as Purchase[];
     return Purchase;
   }
