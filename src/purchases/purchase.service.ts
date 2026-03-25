@@ -5,9 +5,9 @@ import { readFileSync } from 'fs';
 @Injectable()
 export class PurchaseService {
   findAll(
-    customerName: string,
-    startDate: string,
-    endDate: string,
+    customerName: string = '',
+    startDate: string = '',
+    endDate: string = '',
   ): Purchase[] {
     const data = readFileSync('data/purchases.json', 'utf-8');
     let Purchase = JSON.parse(data) as Purchase[];
@@ -34,5 +34,11 @@ export class PurchaseService {
       );
     }
     return Purchase;
+  }
+
+  findOne(id: string): Purchase {
+    const data = this.findAll();
+    const purchase = data.filter((p) => p.id.toString() == id)[0];
+    return purchase;
   }
 }

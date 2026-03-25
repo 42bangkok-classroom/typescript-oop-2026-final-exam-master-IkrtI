@@ -1,5 +1,5 @@
 import type { ApiResponse } from 'src/interfaces/response.interface';
-import { Controller, Query, Get } from '@nestjs/common';
+import { Controller, Query, Get, Param } from '@nestjs/common';
 import { PurchaseService } from './purchase.service';
 import { Purchase } from './purchase.interface';
 
@@ -19,6 +19,15 @@ export class PurchaseController {
         customerName || startDate || endDate
           ? 'Filtered purchases successfully'
           : 'Fetched purchases successfully',
+    };
+  }
+
+  @Get(':id')
+  findOne(@Param('id') id: string): ApiResponse<Purchase> {
+    return {
+      success: true,
+      data: this.purchaseService.findOne(id),
+      message: 'Fetched purchase successfully',
     };
   }
 }
