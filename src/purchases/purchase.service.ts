@@ -17,7 +17,12 @@ export class PurchaseService {
         p.customerName
           .toLocaleLowerCase()
           .split(' ')
-          .includes(customerName.toLocaleLowerCase()),
+          .includes(
+            (typeof customerName == 'string'
+              ? customerName
+              : String(customerName)
+            ).toLocaleLowerCase(),
+          ),
       );
     }
     if (startDate || endDate) {
