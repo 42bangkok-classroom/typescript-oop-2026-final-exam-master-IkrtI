@@ -6,7 +6,7 @@ export class CreatePurchaseDto {
   @IsNotEmpty()
   'purchaseDate': string;
   @IsNotEmpty()
-  'items': PurchaseItemDto;
+  'items': PurchaseItemDto[];
 }
 
 export class PurchaseItemDto {

@@ -1,6 +1,8 @@
 import { Purchase } from './purchase.interface';
 import { Injectable } from '@nestjs/common';
-import { readFileSync } from 'fs';
+import { readFileSync, writeFileSync } from 'fs';
+import { CreatePurchaseDto } from './dto/create-purchase.dto';
+import { Product } from 'src/products/product.interface';
 
 @Injectable()
 export class PurchaseService {
@@ -14,7 +16,7 @@ export class PurchaseService {
     const data = readFileSync('data/purchases.json', 'utf-8');
     let Purchase = JSON.parse(data) as Purchase[];
     const { customerName, startDate, endDate } = rep;
-    if (customerName !== '') {
+    if (customerName) {
       Purchase = Purchase.filter((p) =>
         p.customerName
           .toLocaleLowerCase()
@@ -28,7 +30,7 @@ export class PurchaseService {
       );
     }
 
-    if (startDate !== '' && endDate !== '') {
+    if (startDate || endDate) {
       Purchase = Purchase.filter(
         (p) =>
           new Date(p.purchaseDate).getDate() >= new Date(startDate).getDate() &&
@@ -42,5 +44,40 @@ export class PurchaseService {
     const data = this.findAll();
     const purchase = data.filter((p) => p.id.toString() == id)[0];
     return !purchase ? null : purchase;
+  }
+
+  create(dto: CreatePurchaseDto): Purchase {
+    const data = this.findAll();
+    const newId = (
+      data.reduce(
+        (maxId, purchase) => Math.max(maxId, Number(purchase.id)),
+        0,
+      ) + 1
+    ).toString();
+    const productData = readFileSync('data/products.json', 'utf-8');
+    const product = JSON.parse(productData) as Product[];
+    const items = dto.items.map((it) => {
+      return {
+        productId: it.productId,
+        quantity: it.quantity,
+        price: product.find((p) => p.id == it.productId) as unknown as number,
+      };
+    });
+    const totalPrice = items
+      .map((it) => it.price * it.quantity)
+      .reduce((x, y) => {
+        return x + y;
+      }, 0);
+    const newPurchase: Purchase = {
+      id: Number(newId),
+      customerName: dto.customerName,
+      purchaseDate: dto.purchaseDate,
+      items,
+      totalPrice,
+    };
+
+    data.push(newPurchase);
+    writeFileSync('./data/users.json', JSON.stringify(data, null, 2), 'utf-8');
+    return newPurchase;
   }
 }
