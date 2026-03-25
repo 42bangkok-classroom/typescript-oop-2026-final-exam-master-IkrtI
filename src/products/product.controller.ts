@@ -1,5 +1,5 @@
 import { Controller, Get } from '@nestjs/common';
-import { ProductsService } from './products.service';
+import { ProductsService } from './product.service';
 import type { ApiResponse } from 'src/interfaces/response.interface';
 import { Product } from './product.interface';
 
