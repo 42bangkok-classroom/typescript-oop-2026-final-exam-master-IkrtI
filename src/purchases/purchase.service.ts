@@ -60,7 +60,7 @@ export class PurchaseService {
       return {
         productId: it.productId,
         quantity: it.quantity,
-        price: product.find((p) => p.id == it.productId) as unknown as number,
+        price: product.find((p) => p.id == it.productId)?.price || 0,
       };
     });
     const totalPrice = items
