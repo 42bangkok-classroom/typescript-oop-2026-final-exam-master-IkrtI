@@ -9,9 +9,8 @@ export class PurchaseService {
     startDate: string,
     endDate: string,
   ): Purchase[] {
-    let Purchase = JSON.parse(
-      readFileSync('data/purchases.json', 'utf-8'),
-    ) as Purchase[];
+    const data = readFileSync('data/purchases.json', 'utf-8');
+    let Purchase = JSON.parse(data) as Purchase[];
 
     if (customerName) {
       Purchase = Purchase.filter((p) =>
