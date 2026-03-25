@@ -6,7 +6,7 @@ import { Product } from './product.interface';
 export class ProductsService {
   findAll(): Product[] {
     const product = JSON.parse(
-      readFileSync('/data/products.json', 'utf-8'),
+      readFileSync('data/products.json', 'utf-8'),
     ) as Product[];
     return product;
   }
