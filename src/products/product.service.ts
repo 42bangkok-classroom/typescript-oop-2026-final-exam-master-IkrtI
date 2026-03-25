@@ -3,10 +3,10 @@ import fs from 'fs';
 import { Product } from './product.interface';
 
 @Injectable()
-export class ProductsService {
-  async findAll(): Promise<Product[]> {
+export class ProductService {
+  findAll(): Product[] {
     const data = fs.readFileSync('data/products.json', 'utf-8');
-    const product = (await JSON.parse(data)) as Product[];
+    const product = JSON.parse(data) as Product[];
     return product;
   }
 }
