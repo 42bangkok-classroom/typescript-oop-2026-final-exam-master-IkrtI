@@ -34,7 +34,7 @@ export class PurchaseService {
       Purchase = Purchase.filter(
         (p) =>
           new Date(p.purchaseDate).getDate() >= new Date(startDate).getDate() &&
-          new Date(p.purchaseDate).getDate() < new Date(endDate).getDate(),
+          new Date(p.purchaseDate).getDate() <= new Date(endDate).getDate(),
       );
     }
     return Purchase;
