@@ -36,9 +36,9 @@ export class PurchaseService {
     return Purchase;
   }
 
-  findOne(id: string): Purchase {
+  findOne(id: string): Purchase | null {
     const data = this.findAll();
     const purchase = data.filter((p) => p.id.toString() == id)[0];
-    return purchase;
+    return !purchase ? null : purchase;
   }
 }
