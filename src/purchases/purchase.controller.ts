@@ -14,7 +14,7 @@ export class PurchaseController {
   ): ApiResponse<Purchase[]> {
     return {
       success: true,
-      data: this.purchaseService.findAll(customerName, startDate, endDate),
+      data: this.purchaseService.findAll({ customerName, startDate, endDate }),
       message:
         customerName || startDate || endDate
           ? 'Filtered purchases successfully'

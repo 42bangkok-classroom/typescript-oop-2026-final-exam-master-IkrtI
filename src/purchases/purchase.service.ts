@@ -5,13 +5,15 @@ import { readFileSync } from 'fs';
 @Injectable()
 export class PurchaseService {
   findAll(
-    customerName: string = '',
-    startDate: string = '',
-    endDate: string = '',
+    rep: { customerName: string; startDate: string; endDate: string } = {
+      customerName: '',
+      startDate: '',
+      endDate: '',
+    },
   ): Purchase[] {
     const data = readFileSync('data/purchases.json', 'utf-8');
     let Purchase = JSON.parse(data) as Purchase[];
-
+    const { customerName, startDate, endDate } = rep;
     if (customerName) {
       Purchase = Purchase.filter((p) =>
         p.customerName
