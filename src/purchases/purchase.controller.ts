@@ -24,9 +24,17 @@ export class PurchaseController {
 
   @Get(':id')
   findOne(@Param('id') id: string): ApiResponse<Purchase> {
+    const data = this.purchaseService.findOne(id);
+    if (!data) {
+      return {
+        success: false,
+        data: null,
+        message: `Purchase with id '${id}' not found`,
+      };
+    }
     return {
       success: true,
-      data: this.purchaseService.findOne(id),
+      data: data,
       message: 'Fetched purchase successfully',
     };
   }
