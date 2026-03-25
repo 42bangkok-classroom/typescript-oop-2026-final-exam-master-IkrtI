@@ -77,7 +77,7 @@ export class PurchaseService {
     };
 
     data.push(newPurchase);
-    writeFileSync('./data/users.json', JSON.stringify(data, null, 2), 'utf-8');
+    writeFileSync('data/products.json', JSON.stringify(data, null, 2), 'utf-8');
     return newPurchase;
   }
 }
