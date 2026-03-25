@@ -4,9 +4,9 @@ import { Product } from './product.interface';
 
 @Injectable()
 export class ProductsService {
-  findAll(): Product[] {
+  async findAll(): Promise<Product[]> {
     const data = fs.readFileSync('data/products.json', 'utf-8');
-    const product = JSON.parse(data) as Product[];
+    const product = (await JSON.parse(data)) as Product[];
     return product;
   }
 }
