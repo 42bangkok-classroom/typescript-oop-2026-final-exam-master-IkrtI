@@ -14,7 +14,7 @@ export class PurchaseService {
     const data = readFileSync('data/purchases.json', 'utf-8');
     let Purchase = JSON.parse(data) as Purchase[];
     const { customerName, startDate, endDate } = rep;
-    if (customerName) {
+    if (customerName !== '') {
       Purchase = Purchase.filter((p) =>
         p.customerName
           .toLocaleLowerCase()
@@ -28,7 +28,7 @@ export class PurchaseService {
       );
     }
 
-    if (startDate || endDate) {
+    if (startDate !== '' && endDate !== '') {
       Purchase = Purchase.filter(
         (p) =>
           new Date(p.purchaseDate).getDate() >= new Date(startDate).getDate() &&
