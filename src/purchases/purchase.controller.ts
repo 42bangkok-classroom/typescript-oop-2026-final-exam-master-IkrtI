@@ -1,14 +1,5 @@
 import type { ApiResponse } from 'src/interfaces/response.interface';
-import {
-  Controller,
-  Query,
-  Get,
-  Param,
-  Post,
-  Body,
-  ValidationPipe,
-  UsePipes,
-} from '@nestjs/common';
+import { Body, Controller, Get, Param, Post, Query } from '@nestjs/common';
 import { PurchaseService } from './purchase.service';
 import { Purchase } from './purchase.interface';
 import { CreatePurchaseDto } from './dto/create-purchase.dto';
@@ -50,7 +41,6 @@ export class PurchaseController {
   }
 
   @Post()
-  @UsePipes(new ValidationPipe())
   create(@Body() dto: CreatePurchaseDto): ApiResponse<Purchase> {
     const data = this.purchaseService.create(dto);
     return {

@@ -1,17 +1,36 @@
-import { IsNotEmpty } from 'class-validator';
+import { Type } from 'class-transformer';
+import {
+  ArrayMinSize,
+  IsArray,
+  IsDateString,
+  IsInt,
+  IsNotEmpty,
+  IsString,
+  Min,
+  ValidateNested,
+} from 'class-validator';
 
 export class CreatePurchaseDto {
+  @IsString()
   @IsNotEmpty()
-  'customerName': string;
-  @IsNotEmpty()
-  'purchaseDate': string;
-  @IsNotEmpty()
-  'items': PurchaseItemDto[];
+  customerName: string;
+
+  @IsDateString()
+  purchaseDate: string;
+
+  @IsArray()
+  @ArrayMinSize(1)
+  @ValidateNested({ each: true })
+  @Type(() => PurchaseItemDto)
+  items: PurchaseItemDto[];
 }
 
 export class PurchaseItemDto {
-  @IsNotEmpty()
-  'productId': number;
-  @IsNotEmpty()
-  'quantity': number;
+  @IsInt()
+  @Min(1)
+  productId: number;
+
+  @IsInt()
+  @Min(1)
+  quantity: number;
 }
