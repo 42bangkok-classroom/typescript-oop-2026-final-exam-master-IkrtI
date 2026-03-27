@@ -14,9 +14,12 @@ export class PurchaseService {
     const { customerName, startDate, endDate } = rep;
 
     if (customerName) {
-      const normalizedCustomerName = customerName.toLowerCase();
+      const normalizedCustomerName = customerName.toLowerCase().trim();
       purchases = purchases.filter((p) =>
-        p.customerName.toLowerCase().includes(normalizedCustomerName),
+        p.customerName
+          .toLowerCase()
+          .split(/\s+/)
+          .includes(normalizedCustomerName),
       );
     }
 
@@ -31,9 +34,10 @@ export class PurchaseService {
     return purchases;
   }
 
-  findOne(id: string): Purchase | null {
+  findOne(id: string | number): Purchase | null {
     const data = this.findAll();
-    const purchase = data.find((p) => p.id.toString() === id);
+    const targetId = String(id);
+    const purchase = data.find((p) => String(p.id) === targetId);
     return !purchase ? null : purchase;
   }
 
